@@ -12,10 +12,11 @@ namespace FlottaApi
 
             // Add services to the container.
 
-            builder.Services.AddDbContext<FlottaContext>(options => {
+            builder.Services.AddDbContext<FlottaContext>(options =>
+            {
                 string connstr = builder.Configuration.GetConnectionString("FlottaConnection");
                 options.UseMySql(connstr, ServerVersion.AutoDetect(connstr));
-            })
+            });
 
 
             builder.Services.AddControllers();
@@ -28,6 +29,8 @@ namespace FlottaApi
             if (app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();
+                app.UseSwaggerUI(options => options.SwaggerEndpoint("/openapi/v1.json", "v1"));
+
             }
 
             app.UseHttpsRedirection();
